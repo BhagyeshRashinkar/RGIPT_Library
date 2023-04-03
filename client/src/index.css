@@ -1,0 +1,93 @@
+.main{
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff4cf;
+}
+
+#header {
+  text-align: center;
+  background: #ffb200;
+}
+.heading-table-data {
+  text-align: left;
+}
+
+.center {
+  width: 800px;
+  flex-grow: 1;
+  /* border: #fff4cf 5px solid; */
+  text-align: center;
+  margin: 3% auto 3% auto;
+  padding: auto;
+}
+.grey {
+  margin: auto;
+  width: 40%;
+}
+
+*/ h1 {
+  line-height: 1.5;
+}
+h3 a {
+  text-decoration: none;
+  color: #333;
+  background: #277bc0;
+  padding: 20px;
+  display: inline-block;
+  margin: 20px;
+  border: solid #ffb200 2px;
+  border-radius: 24px;
+  background-image: -webkit-linear-gradient(top, #277bc0, #91d6de);
+}
+h3 a:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+.rgipt-logo {
+  width: 50%;
+  margin: 20px 0px;
+}
+hr {
+  margin: 0;
+}
+#year-page {
+  flex-grow: 1;
+  padding: 20px 0px;
+}
+.selector-buttons {
+  margin: 20px 0px;
+}
+
+#footer {
+  width: 100%;
+  border: 2px solid #ffb200;
+  text-align: center;
+}
+
+.selectors-button {
+  margin: 20px 0px;
+}
+.button {
+  margin: 10px 0px;
+}
+.books-table {
+  width: 50%;
+  align-self: center;
+  margin: 0% 25%;
+}
+.books-table thead,
+tfoot {
+  background-color: #333;
+  color: #fff;
+}
+.books-table td {
+  border: 1px solid #333;
+}

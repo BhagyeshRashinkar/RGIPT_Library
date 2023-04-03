@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e717641d.css",
+    "main.js": "/static/js/main.25108e49.js",
+    "static/media/RGIPT-Logo.png": "/static/media/RGIPT-Logo.929a03c4f3bbed135b9e.png",
+    "index.html": "/index.html",
+    "main.e717641d.css.map": "/static/css/main.e717641d.css.map",
+    "main.25108e49.js.map": "/static/js/main.25108e49.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e717641d.css",
+    "static/js/main.25108e49.js"
+  ]
+}
