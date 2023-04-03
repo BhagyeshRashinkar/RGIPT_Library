@@ -8,7 +8,7 @@ import Year1 from "./Year1";
 import Year2 from "./Year2";
 import Year3 from "./Year3";
 import Year4 from "./Year4";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import { useState } from "react";
 
 function App() {
