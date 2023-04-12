@@ -21,7 +21,9 @@ function Header() {
                 <h2>Virtual Library</h2>
                 <hr />
                 <NavBar />
+
             </section>
+                <marquee className="running">Welcome to Virtual Library of RGIPT</marquee>
         </>
     )
 }

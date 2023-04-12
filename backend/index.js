@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require("cors");
 const mongoose = require("mongoose");
+const md5 = require("md5");
 
 const app = express();
 app.use(express.json())
@@ -22,7 +23,9 @@ const userSchema = new mongoose.Schema({
 const User = new mongoose.model("User", userSchema)
 
 app.post("/login", (req, res) => {
-    const {email, password} = req.body;
+    // const {email, password} = req.body;
+    const email = req.body.email;
+    const password = md5(req.body.password);
     User.findOne({email:email}).then((user) => {
         if(!user){
             res.send({message:"User not registered"});
@@ -39,7 +42,10 @@ app.post("/login", (req, res) => {
 })
 
 app.post("/register", (req, res) => {
-    const { name, email, password } = req.body;
+    const name = req.body.name;
+    const email = req.body.email;
+    const password = md5(req.body.password);
+
     User.findOne({ email: email }).then((user)=>{
         if(!user){
             const user = new User({

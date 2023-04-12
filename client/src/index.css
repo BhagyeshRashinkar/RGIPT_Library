@@ -13,18 +13,21 @@
 .heading-table-data {
   text-align: left;
 }
-
-.center {
-  width: 800px;
-  flex-grow: 1;
-  /* border: #fff4cf 5px solid; */
-  text-align: center;
-  margin: 3% auto 3% auto;
-  padding: auto;
+.running{
+  background-color: #333;
+  color: #fff;
 }
-.grey {
-  margin: auto;
-  width: 40%;
+.center {
+  display: flex;
+  
+}
+.flex-child{
+  width: 30%;
+  height: auto;
+  margin: 2%;
+}
+.quote{
+    border-radius: 10%;
 }
 
 */ h1 {
