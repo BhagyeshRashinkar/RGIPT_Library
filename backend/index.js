@@ -8,7 +8,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-mongoose.connect("mongodb://127.0.0.1:27017/libraryUser").then(() => {
+mongoose.connect('mongodb+srv://bhagyeshrashinkar:Ta14M3PxvdeYPQcl@cluster0.34exzqc.mongodb.net/libraryuser?retryWrites=true&w=majority').then(() => {
     console.log("Connection Established")
 }).catch((err) => {
     console.log("No connection");
@@ -26,18 +26,18 @@ app.post("/login", (req, res) => {
     // const {email, password} = req.body;
     const email = req.body.email;
     const password = md5(req.body.password);
-    User.findOne({email:email}).then((user) => {
-        if(!user){
-            res.send({message:"User not registered"});
-        }else{
-            if(password===user.password){
-                res.send({message:"Login Successful", user:user});
-            }else{
-                res.send({message: "Incorrect password"});
+    User.findOne({ email: email }).then((user) => {
+        if (!user) {
+            res.send({ message: "User not registered" });
+        } else {
+            if (password === user.password) {
+                res.send({ message: "Login Successful", user: user });
+            } else {
+                res.send({ message: "Incorrect password" });
             }
         }
-    }).catch((err)=>{
-        res.send({message:"Invalid User"});
+    }).catch((err) => {
+        res.send({ message: "Invalid User" });
     })
 })
 
@@ -46,20 +46,20 @@ app.post("/register", (req, res) => {
     const email = req.body.email;
     const password = md5(req.body.password);
 
-    User.findOne({ email: email }).then((user)=>{
-        if(!user){
+    User.findOne({ email: email }).then((user) => {
+        if (!user) {
             const user = new User({
                 name,
                 email,
                 password
             })
             user.save().then((user) => {
-                if(user){
-                    res.send({message:"Successful registration"})
+                if (user) {
+                    res.send({ message: "Successful registration" })
                 }
             })
-        }else{
-            res.send(message="User already registered");
+        } else {
+            res.send(message = "User already registered");
         }
     }).catch((err) => {
         res.send(err);
