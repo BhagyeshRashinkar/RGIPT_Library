@@ -1,77 +1,85 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import { useEffect } from "react";
-import { getDownloadURL, ref} from "firebase/storage";
-import storage from './config/firebase'
+import { useEffect, useState } from "react";
+import { getDownloadURL, ref, listAll } from "firebase/storage";
+import storage from "./config/firebase";
+
+const fetchBooks = async () => {
+  const year1FolderRef = ref(storage, "year2"); // Replace 'year1' with your actual subfolder name
+
+  try {
+    const booksList = await listAll(year1FolderRef);
+    return booksList.items.map((item) => ({
+      name: item.name,
+      displayName: item.name.replace(".pdf", ""),
+    }));
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    return [];
+  }
+};
+
+const fetchDownloadURL = async (fileName) => {
+  try {
+    const url = await getDownloadURL(ref(storage, `year2/${fileName}`));
+    return url;
+  } catch (error) {
+    console.error("Error fetching download URL:", error);
+    return null; // Return null or handle the error appropriately
+  }
+};
 
 function Year2() {
-    
-    useEffect(()=>{
-        getDownloadURL(ref(storage, 'Data Structures With C - by schaum lipschutz.pdf')).then((url)=>
-        console.log(url)
-    )})
+  const [books, setBooks] = useState([]);
 
-    useEffect(()=>{
-        getDownloadURL(ref(storage, 'ENGINEERING DRAWING BY N.D BHATT.pdf')).then((url)=>
-        console.log(url)
-    )})
+  useEffect(() => {
+    const fetchData = async () => {
+      const booksData = await fetchBooks();
+      setBooks(booksData);
+    };
 
-    useEffect(()=>{
-        getDownloadURL(ref(storage, 'Learning_Python.pdf')).then((url)=>
-        console.log(url)
-    )})
+    fetchData();
+  }, []); // Run once on component mount
 
-    useEffect(()=>{
-        getDownloadURL(ref(storage, 'Linear Algebra and Its Applications.pdf')).then((url)=>
-        console.log(url)
-    )})
+  const handleViewClick = async (fileName) => {
+    const url = await fetchDownloadURL(fileName);
 
-    useEffect(()=>{
-        getDownloadURL(ref(storage, 'material-science-and-engineering-v-raghavanpdf-pr_dbbff24bdad78633ad30dd9bfbf9f7af.pdf')).then((url)=>
-        console.log(url)
-    )})
+    if (url) {
+      window.open(url, "_blank");
+    } else {
+      console.error("Error: Unable to open the book.");
+    }
+  };
 
-    useEffect(()=>{
-        getDownloadURL(ref(storage, 'Statistical and mathematics.pdf')).then((url)=>
-        console.log(url)
-    )})
-    return (
-        <div className="main ">
-            <Header />
-            {/* Resources */}
-            <section id="year-page">
-                <h2>List of Books (2nd year)</h2>
-                <table className="books-table">
-                     <thead>
-                        <tr>
-                            <th colSpan="2">Your Books</th><th colSpan='2'>Links</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colSpan="2">Data Structures With C - by Schaum Lipschutz</td><td><a target= '_blank' rel="noreferrer" href='https://firebasestorage.googleapis.com/v0/b/test-23c29.appspot.com/o/Data%20Structures%20With%20C%20-%20by%20schaum%20lipschutz.pdf?alt=media&token=1d3eb902-f4c9-429b-b0fb-15c9b5e28401'>View</a></td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">ENGINEERING DRAWING BY N.D BHATT</td><td><a target= '_blank' rel="noreferrer" href='https://firebasestorage.googleapis.com/v0/b/test-23c29.appspot.com/o/ENGINEERING%20DRAWING%20BY%20N.D%20BHATT.pdf?alt=media&token=d1eb432d-d2d1-4928-8e74-6ab71bd0fafc'>View</a></td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">Learning_Python.pdf</td><td><a target= '_blank' rel="noreferrer" href='https://firebasestorage.googleapis.com/v0/b/test-23c29.appspot.com/o/Learning_Python.pdf?alt=media&token=1310a87f-9800-4514-a92e-4e5ca46ff6a1'>View</a></td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">Linear Algebra and Its Applications</td><td><a target= '_blank' rel="noreferrer" href='https://firebasestorage.googleapis.com/v0/b/test-23c29.appspot.com/o/Linear%20Algebra%20and%20Its%20Applications.pdf?alt=media&token=e84d148c-1b93-4867-bd88-81786093e7a4'>View</a></td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">Material Science and Engineering-V Raghavan</td><td><a target= '_blank' rel="noreferrer" href='https://firebasestorage.googleapis.com/v0/b/test-23c29.appspot.com/o/material-science-and-engineering-v-raghavanpdf-pr_dbbff24bdad78633ad30dd9bfbf9f7af.pdf?alt=media&token=3b060e2b-438d-4ecd-b6aa-18287c418ee1'>View</a></td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">Statistical and mathematics</td><td><a target= '_blank'rel="noreferrer"  href='https://firebasestorage.googleapis.com/v0/b/test-23c29.appspot.com/o/Statistical%20and%20mathematics.pdf?alt=media&token=2c9161fc-f2a0-4b75-8872-da9e320adb0a'>View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-            <Footer />
-        </div>
-    )
+  return (
+    <div className="main">
+      <Header />
+      <section id="year-page">
+        <h2>List of Books (2nd year)</h2>
+        <table className="books-table">
+          <thead>
+            <tr>
+              <th colSpan="2">Your Books</th>
+              <th colSpan="2">Links</th>
+            </tr>
+          </thead>
+          <tbody>
+            {books.map((book, index) => (
+              <tr key={index}>
+                <td colSpan="2">{book.displayName}</td>
+                <td>
+                  <button onClick={() => handleViewClick(book.name)}>
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+      <Footer />
+    </div>
+  );
 }
 
-export default Year2
+export default Year2;

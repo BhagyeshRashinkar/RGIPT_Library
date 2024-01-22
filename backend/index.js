@@ -2,13 +2,16 @@ const express = require('express')
 const cors = require("cors");
 const mongoose = require("mongoose");
 const md5 = require("md5");
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-mongoose.connect('mongodb+srv://bhagyeshrashinkar:Ta14M3PxvdeYPQcl@cluster0.34exzqc.mongodb.net/libraryuser?retryWrites=true&w=majority').then(() => {
+mongoose.connect(process.env.MONGOURI).then(() => {
     console.log("Connection Established")
 }).catch((err) => {
     console.log("No connection");
@@ -67,6 +70,6 @@ app.post("/register", (req, res) => {
 
 })
 
-app.listen(3001, () => {
+app.listen(process.env.PORT, () => {
     console.log("Backend Started at port 3001");
 }) 
